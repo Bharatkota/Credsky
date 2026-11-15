@@ -1,6 +1,7 @@
 import { Cloud, Droplets, Eye, Gauge, RefreshCw, Star, Thermometer, Wind } from 'lucide-react'
 import WeatherIcon from './WeatherIcon'
-import { getWeatherInfo } from '../lib/weatherCodes'
+import Minion from './Minion'
+import { getThemeKey, getWeatherInfo } from '../lib/weatherCodes'
 import {
   formatAge,
   formatPercent,
@@ -75,7 +76,7 @@ export default function CurrentWeather({
           </button>
         </div>
 
-        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
+        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
           <div className="flex items-center gap-4">
             <WeatherIcon icon={info.icon} className="h-16 w-16 shrink-0 sm:h-20 sm:w-20" />
             <div>
@@ -85,6 +86,13 @@ export default function CurrentWeather({
               <p className="mt-1.5 text-lg font-semibold text-white/85">{info.label}</p>
             </div>
           </div>
+
+          {/* The mascot reacts to conditions and feels-like temperature */}
+          <Minion
+            themeKey={getThemeKey(current.weather_code, current.is_day === 1)}
+            feelsLike={current.apparent_temperature}
+          />
+
           <div className="text-sm text-white/75">
             <p>
               Feels like <span className="font-bold text-white">{formatTemp(current.apparent_temperature, unit)}</span>

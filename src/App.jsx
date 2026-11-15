@@ -9,7 +9,6 @@ import ErrorState from './components/ErrorState'
 import Skeleton from './components/Skeleton'
 import Footer from './components/Footer'
 import WeatherBackground from './components/WeatherBackground'
-import Minion from './components/Minion'
 import * as api from './lib/api'
 import * as storage from './lib/storage'
 import { events } from './lib/analytics'
@@ -205,9 +204,6 @@ export default function App() {
     >
       {/* Weather-responsive animated background (FR-08); decorative only */}
       <WeatherBackground themeKey={themeKey} />
-
-      {/* Walking mascot; attire follows the weather once it is known */}
-      <Minion themeKey={status === 'ready' && weather ? themeKey : null} />
 
       <div className="relative z-10 flex min-h-screen flex-col">
         <Header

@@ -160,31 +160,74 @@ body {
 .anim-fogdrift { animation: fog-drift ease-in-out infinite alternate; }
 .anim-sun { animation: sun-pulse 7s ease-in-out infinite; }
 
-/* ---------- Minion mascot ---------- */
+/* ---------- Minion mascot (lives next to the temperature) ---------- */
 
-.minion-walker {
-  position: fixed;
-  bottom: 6px;
-  left: 0;
-  z-index: 30;
-  pointer-events: none;
-  animation: minion-walk 48s linear infinite;
+.minion-roam {
+  animation: minion-roam 7s ease-in-out infinite;
   will-change: transform;
 }
 
-@keyframes minion-walk {
-  from { transform: translateX(-140px); }
-  to { transform: translateX(calc(100vw + 140px)); }
+@keyframes minion-roam {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(12px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-12px); }
 }
 
 .minion-bob {
   animation: minion-bob 0.55s ease-in-out infinite alternate;
-  transform-origin: 50% 100%;
 }
 
 @keyframes minion-bob {
   from { transform: translateY(0) rotate(-1.5deg); }
   to { transform: translateY(-3.5px) rotate(1.5deg); }
+}
+
+.minion-shiver {
+  animation: minion-shiver 0.18s linear infinite;
+}
+
+@keyframes minion-shiver {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(1.8deg) translateX(-1px); }
+  75% { transform: rotate(-1.8deg) translateX(1px); }
+}
+
+.minion-dance {
+  animation: minion-dance 0.6s ease-in-out infinite;
+}
+
+@keyframes minion-dance {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-9px) rotate(4deg); }
+}
+
+.minion-cower {
+  animation: minion-cower 0.45s ease-in-out infinite;
+}
+
+@keyframes minion-cower {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  50% { transform: translateY(2px) scaleY(0.96); }
+}
+
+.anim-sweat {
+  animation: sweat-drop 1.6s ease-out infinite;
+}
+
+@keyframes sweat-drop {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.6); }
+  25% { opacity: 1; }
+  100% { opacity: 0; transform: translate(7px, 17px) scale(1); }
+}
+
+.anim-star {
+  animation: star-fish 3s ease-in-out infinite;
+}
+
+@keyframes star-fish {
+  0%, 100% { transform: rotate(-7deg); }
+  50% { transform: rotate(7deg); }
 }
 
 /* ---------- Focus visibility ---------- */
