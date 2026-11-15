@@ -8,6 +8,7 @@ import SavedCities from './components/SavedCities'
 import ErrorState from './components/ErrorState'
 import Skeleton from './components/Skeleton'
 import Footer from './components/Footer'
+import WeatherBackground from './components/WeatherBackground'
 import * as api from './lib/api'
 import * as storage from './lib/storage'
 import { events } from './lib/analytics'
@@ -26,6 +27,8 @@ export default function App() {
   const [recents, setRecents] = useState(() => storage.getRecents())
   const [geoStatus, setGeoStatus] = useState('idle') // idle | locating | denied | error
   const [refreshing, setRefreshing] = useState(false)
+  // Bumped when returning home so the search bar remounts empty
+  const [searchKey, setSearchKey] = useState(0)
 
   const abortRef = useRef(null)
 
@@ -190,6 +193,7 @@ export default function App() {
     abortRef.current?.abort()
     setStatus('home')
     setWeather(null)
+    setSearchKey((k) => k + 1)
   }, [])
 
   const themeKey = weather ? getThemeKey(weather.current.weather_code, weather.current.is_day === 1) : 'cloudy-day'
@@ -200,21 +204,14 @@ export default function App() {
       className="relative flex min-h-screen flex-col transition-[background] duration-700"
       style={{ background: theme.gradient }}
     >
-      {/* Ambient decorative orbs; hidden from AT and disabled under reduced motion */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div
-          className="anim-drift absolute -top-24 -right-24 h-96 w-96 rounded-full blur-3xl"
-          style={{ background: `radial-gradient(circle, ${theme.orb}, transparent 65%)` }}
-        />
-        <div
-          className="anim-drift absolute -bottom-32 -left-20 h-[28rem] w-[28rem] rounded-full blur-3xl"
-          style={{ background: `radial-gradient(circle, ${theme.orb}, transparent 65%)`, animationDelay: '4s' }}
-        />
-      </div>
+      {/* Weather-responsive animated background (FR-08); decorative only */}
+      <WeatherBackground themeKey={themeKey} />
 
       <div className="relative z-10 flex min-h-screen flex-col">
         <Header
           unit={unit}
+          searchKey={searchKey}
+          onLogoClick={goHome}
           onUnitChange={{ toggle: toggleUnit, onSearchSelect: selectCity }}
         />
 

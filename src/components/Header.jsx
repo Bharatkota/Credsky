@@ -2,9 +2,17 @@ import SearchBar from './SearchBar'
 
 // Logo, global search and the °C/°F segmented toggle (FR-06).
 
-function Logo() {
+function Logo({ onClick }) {
   return (
-    <a href="/" onClick={(e) => e.preventDefault()} className="flex items-center gap-2 shrink-0" aria-label="WeatherCatch home">
+    <a
+      href="/"
+      onClick={(e) => {
+        e.preventDefault()
+        onClick?.()
+      }}
+      className="flex items-center gap-2 shrink-0"
+      aria-label="WeatherCatch home"
+    >
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className="w-7 h-7 text-amber-300" aria-hidden>
         <circle cx="9" cy="8" r="3.2" />
         <path d="M9 2.8v1.4M4 8h1.4M5.3 4.3l1 1M12.7 4.3l-1 1" />
@@ -17,12 +25,16 @@ function Logo() {
   )
 }
 
-export default function Header({ unit, onUnitChange }) {
+export default function Header({ unit, onUnitChange, onLogoClick, searchKey }) {
   return (
     <header className="w-full">
       <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 pt-4 sm:flex-row sm:items-center sm:gap-4 sm:px-6">
-        <Logo />
-        <SearchBar onSelect={onUnitChange.onSearchSelect} className="order-3 w-full sm:order-2 sm:flex-1" />
+        <Logo onClick={onLogoClick} />
+        <SearchBar
+          key={searchKey}
+          onSelect={onUnitChange.onSearchSelect}
+          className="order-3 w-full sm:order-2 sm:flex-1"
+        />
         <div
           role="radiogroup"
           aria-label="Temperature unit"

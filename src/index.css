@@ -72,6 +72,94 @@ body {
 .delay-2 { animation-delay: 0.16s; }
 .delay-3 { animation-delay: 0.24s; }
 
+/* ---------- Weather background layers (FR-08) ---------- */
+
+.bg-cloud {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(10px);
+}
+.bg-drop {
+  position: absolute;
+  top: -30px;
+  width: 1.5px;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.65));
+}
+.bg-flake {
+  position: absolute;
+  top: -10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  filter: blur(0.4px);
+}
+.bg-star {
+  position: absolute;
+  border-radius: 50%;
+  background: #e2e8f0;
+}
+.bg-fogband {
+  position: absolute;
+  left: -10%;
+  width: 120%;
+  height: 18%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+  filter: blur(34px);
+}
+.bg-flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 18%, rgba(255,255,255,0.85), transparent 55%);
+  opacity: 0;
+}
+.bg-sun {
+  background: radial-gradient(circle, rgba(253,230,138,0.95) 0%, rgba(253,224,71,0.45) 30%, transparent 68%);
+  filter: blur(4px);
+}
+
+@keyframes fall {
+  from { transform: translateY(-12vh); }
+  to { transform: translateY(112vh); }
+}
+@keyframes snow-fall {
+  0% { transform: translate(0, -8vh); }
+  25% { transform: translate(14px, 28vh); }
+  50% { transform: translate(-10px, 56vh); }
+  75% { transform: translate(12px, 82vh); }
+  100% { transform: translate(0, 112vh); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+@keyframes flash {
+  0%, 86%, 92%, 96%, 100% { opacity: 0; }
+  88% { opacity: 0.55; }
+  90% { opacity: 0.2; }
+  94% { opacity: 0.4; }
+}
+@keyframes cloud-drift {
+  from { transform: translateX(-14%); }
+  to { transform: translateX(14%); }
+}
+@keyframes fog-drift {
+  from { transform: translateX(-6%); }
+  to { transform: translateX(6%); }
+}
+@keyframes sun-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+
+.anim-fall { animation: fall linear infinite; }
+.anim-snow { animation: snow-fall linear infinite; }
+.anim-twinkle { animation: twinkle ease-in-out infinite; }
+.anim-flash { animation: flash 9s linear infinite; }
+.anim-cloud { animation: cloud-drift ease-in-out infinite alternate; }
+.anim-fogdrift { animation: fog-drift ease-in-out infinite alternate; }
+.anim-sun { animation: sun-pulse 7s ease-in-out infinite; }
+
 /* ---------- Focus visibility ---------- */
 
 :focus-visible {
