@@ -160,6 +160,33 @@ body {
 .anim-fogdrift { animation: fog-drift ease-in-out infinite alternate; }
 .anim-sun { animation: sun-pulse 7s ease-in-out infinite; }
 
+/* ---------- Minion mascot ---------- */
+
+.minion-walker {
+  position: fixed;
+  bottom: 6px;
+  left: 0;
+  z-index: 30;
+  pointer-events: none;
+  animation: minion-walk 48s linear infinite;
+  will-change: transform;
+}
+
+@keyframes minion-walk {
+  from { transform: translateX(-140px); }
+  to { transform: translateX(calc(100vw + 140px)); }
+}
+
+.minion-bob {
+  animation: minion-bob 0.55s ease-in-out infinite alternate;
+  transform-origin: 50% 100%;
+}
+
+@keyframes minion-bob {
+  from { transform: translateY(0) rotate(-1.5deg); }
+  to { transform: translateY(-3.5px) rotate(1.5deg); }
+}
+
 /* ---------- Focus visibility ---------- */
 
 :focus-visible {
