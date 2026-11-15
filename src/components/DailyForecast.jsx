@@ -34,7 +34,7 @@ export default function DailyForecast({ daily, unit }) {
         )}
       </div>
 
-      <ul className="glass mt-2.5 divide-y divide-white/10 rounded-3xl px-2 sm:px-4">
+      <ul className="glass mt-2.5 divide-y divide-white/[0.08] rounded-[28px] px-2 sm:px-4">
         {daily.map((d, i) => {
           const info = getWeatherInfo(d.weather_code, true)
           return (

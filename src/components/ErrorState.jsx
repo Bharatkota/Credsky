@@ -27,7 +27,7 @@ export default function ErrorState({ error, onRetry, onBackHome }) {
             <button
               type="button"
               onClick={onRetry}
-              className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-slate-900 transition hover:bg-white/90 active:scale-[0.98]"
+              className="btn-glossy inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold"
             >
               <RefreshCw aria-hidden className="h-4 w-4" />
               Try again

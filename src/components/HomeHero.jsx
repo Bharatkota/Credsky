@@ -41,7 +41,7 @@ export default function HomeHero({
       <p className="anim-fade-in mt-10 text-sm font-semibold uppercase tracking-[0.25em] text-white/70">
         Weather Catch
       </p>
-      <h1 className="anim-fade-up mt-3 max-w-2xl text-4xl font-extrabold leading-tight sm:text-5xl">
+      <h1 className="anim-fade-up mt-3 max-w-2xl text-4xl font-extrabold leading-[1.05] tracking-[-0.03em] sm:text-5xl">
         Know your weather <span className="text-amber-300">before</span> it catches you.
       </h1>
       <p className="anim-fade-up delay-1 mt-4 max-w-xl text-white/75">
@@ -52,7 +52,7 @@ export default function HomeHero({
         type="button"
         onClick={onUseMyLocation}
         disabled={busy}
-        className="anim-fade-up delay-2 mt-8 inline-flex items-center gap-2.5 rounded-full bg-white px-7 py-3.5 font-bold text-slate-900 shadow-lg transition hover:bg-white/90 hover:shadow-xl active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-80"
+        className="btn-glossy anim-fade-up delay-2 mt-8 inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 font-bold"
       >
         {busy ? (
           <Loader2 aria-hidden className="h-5 w-5 animate-spin" />

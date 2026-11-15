@@ -43,7 +43,7 @@ export default function CurrentWeather({
 
   return (
     <section aria-label={`Current weather in ${location.name}`} className="anim-fade-up">
-      <div className="glass-strong rounded-3xl p-5 sm:p-7">
+      <div className="glass-strong glossy rounded-[28px] p-5 sm:p-7">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="flex items-center gap-2">
@@ -80,7 +80,7 @@ export default function CurrentWeather({
           <div className="flex items-center gap-4">
             <WeatherIcon icon={info.icon} className="h-16 w-16 shrink-0 sm:h-20 sm:w-20" />
             <div>
-              <p className="text-6xl font-extrabold leading-none tracking-tight sm:text-7xl">
+              <p className="text-6xl font-extrabold leading-none tracking-[-0.045em] sm:text-7xl">
                 {formatTemp(current.temperature_2m, unit)}
               </p>
               <p className="mt-1.5 text-lg font-semibold text-white/85">{info.label}</p>

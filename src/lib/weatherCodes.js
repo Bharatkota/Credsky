@@ -50,35 +50,35 @@ export function getThemeKey(code, isDay = true) {
 
 export const THEMES = {
   'clear-day': {
-    gradient: 'linear-gradient(180deg, #38bdf8 0%, #0ea5e9 40%, #075985 100%)',
-    orb: 'rgba(253, 224, 71, 0.55)',
+    gradient: 'linear-gradient(180deg, #7cc4f8 0%, #2e90e0 45%, #0a5a9e 100%)',
+    orb: 'rgba(253, 224, 71, 0.5)',
   },
   'clear-night': {
-    gradient: 'linear-gradient(180deg, #0f172a 0%, #1e1b4b 55%, #312e81 100%)',
-    orb: 'rgba(226, 232, 240, 0.25)',
+    gradient: 'linear-gradient(180deg, #0a1020 0%, #1a2142 55%, #2b2a5e 100%)',
+    orb: 'rgba(226, 232, 240, 0.22)',
   },
   'cloudy-day': {
-    gradient: 'linear-gradient(180deg, #7ba0bf 0%, #64748b 45%, #334155 100%)',
-    orb: 'rgba(255, 255, 255, 0.3)',
+    gradient: 'linear-gradient(180deg, #8ba7bd 0%, #61809a 45%, #3a4d61 100%)',
+    orb: 'rgba(255, 255, 255, 0.28)',
   },
   'cloudy-night': {
-    gradient: 'linear-gradient(180deg, #1e293b 0%, #0f172a 55%, #1e1b4b 100%)',
-    orb: 'rgba(148, 163, 184, 0.2)',
+    gradient: 'linear-gradient(180deg, #1b2534 0%, #101827 55%, #1c1a38 100%)',
+    orb: 'rgba(148, 163, 184, 0.18)',
   },
   rain: {
-    gradient: 'linear-gradient(180deg, #475569 0%, #1e293b 50%, #0f172a 100%)',
-    orb: 'rgba(125, 211, 252, 0.22)',
+    gradient: 'linear-gradient(180deg, #51657a 0%, #26313f 50%, #101821 100%)',
+    orb: 'rgba(125, 211, 252, 0.2)',
   },
   thunder: {
-    gradient: 'linear-gradient(180deg, #3b2f63 0%, #1e1b4b 50%, #0f172a 100%)',
-    orb: 'rgba(250, 204, 21, 0.25)',
+    gradient: 'linear-gradient(180deg, #40336b 0%, #211d4d 50%, #0d1024 100%)',
+    orb: 'rgba(250, 204, 21, 0.22)',
   },
   snow: {
-    gradient: 'linear-gradient(180deg, #9fb3c8 0%, #64748b 50%, #334155 100%)',
-    orb: 'rgba(255, 255, 255, 0.4)',
+    gradient: 'linear-gradient(180deg, #a9bccd 0%, #6d8195 50%, #465a6e 100%)',
+    orb: 'rgba(255, 255, 255, 0.38)',
   },
   fog: {
-    gradient: 'linear-gradient(180deg, #6b7280 0%, #4b5563 50%, #374151 100%)',
-    orb: 'rgba(255, 255, 255, 0.28)',
+    gradient: 'linear-gradient(180deg, #7b8492 0%, #545c69 50%, #3b424d 100%)',
+    orb: 'rgba(255, 255, 255, 0.26)',
   },
 }

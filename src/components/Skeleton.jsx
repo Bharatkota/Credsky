@@ -13,7 +13,7 @@ export default function Skeleton({ locationName }) {
       aria-live="polite"
       aria-label={locationName ? `Loading weather for ${locationName}` : 'Loading weather'}
     >
-      <div className="glass-strong rounded-3xl p-5 sm:p-7">
+      <div className="glass-strong glossy rounded-[28px] p-5 sm:p-7">
         <div className="flex items-center justify-between">
           <div className="space-y-2.5">
             <Bar className="h-7 w-44" />

@@ -122,7 +122,7 @@ export default function SearchBar({ onSelect, className = '' }) {
           onKeyDown={onKeyDown}
           onFocus={() => results.length > 0 && setOpen(true)}
           autoComplete="off"
-          className="glass-strong w-full rounded-full py-3 pl-11 pr-11 text-[15px] text-white placeholder-white/60 outline-none focus:bg-white/20 transition"
+          className="search-pill w-full rounded-full py-3 pl-11 pr-11 text-[15px] text-white placeholder-white/55 outline-none transition"
         />
         {searching && (
           <Loader2 aria-label="Searching" className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/80 animate-spin" />
@@ -134,7 +134,7 @@ export default function SearchBar({ onSelect, className = '' }) {
           id={listboxId}
           role="listbox"
           aria-label="City suggestions"
-          className="absolute z-40 mt-2 w-full max-h-80 overflow-y-auto rounded-2xl border border-white/20 bg-slate-900/90 backdrop-blur-xl shadow-2xl py-1.5"
+          className="absolute z-40 mt-2 w-full max-h-80 overflow-y-auto rounded-2xl border border-white/20 bg-slate-950/70 backdrop-blur-2xl shadow-[0_24px_60px_rgba(0,0,0,0.45)] py-1.5"
         >
           {results.map((city, i) => (
             <li key={`${city.id}-${i}`} role="none">

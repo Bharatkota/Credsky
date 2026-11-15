@@ -27,33 +27,33 @@ function Logo({ onClick }) {
 
 export default function Header({ unit, onUnitChange, onLogoClick, searchKey }) {
   return (
-    <header className="w-full">
-      <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 pt-4 sm:flex-row sm:items-center sm:gap-4 sm:px-6">
-        <Logo onClick={onLogoClick} />
-        <SearchBar
-          key={searchKey}
-          onSelect={onUnitChange.onSearchSelect}
-          className="order-3 w-full sm:order-2 sm:flex-1"
-        />
-        <div
-          role="radiogroup"
-          aria-label="Temperature unit"
-          className="order-2 flex shrink-0 self-start rounded-full border border-white/20 bg-white/10 p-0.5 sm:order-3 sm:self-auto"
-        >
-          {['C', 'F'].map((u) => (
-            <button
-              key={u}
-              type="button"
-              role="radio"
-              aria-checked={unit === u}
-              onClick={() => onUnitChange.toggle(u)}
-              className={`w-10 rounded-full py-1.5 text-sm font-bold transition ${
-                unit === u ? 'bg-white text-slate-900 shadow' : 'text-white/75 hover:text-white'
-              }`}
-            >
-              °{u}
-            </button>
-          ))}
+    <header className="sticky top-0 z-40 w-full">
+      <div className="nav-glass">
+        <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:gap-4 sm:px-6">
+          <Logo onClick={onLogoClick} />
+          <SearchBar
+            key={searchKey}
+            onSelect={onUnitChange.onSearchSelect}
+            className="order-3 w-full sm:order-2 sm:flex-1"
+          />
+          <div
+            role="radiogroup"
+            aria-label="Temperature unit"
+            className="seg-track order-2 shrink-0 self-start sm:order-3 sm:self-auto"
+          >
+            {['C', 'F'].map((u) => (
+              <button
+                key={u}
+                type="button"
+                role="radio"
+                aria-checked={unit === u}
+                onClick={() => onUnitChange.toggle(u)}
+                className={`seg-item ${unit === u ? 'seg-item-active' : ''}`}
+              >
+                °{u}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </header>

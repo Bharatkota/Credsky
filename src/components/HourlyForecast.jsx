@@ -24,7 +24,7 @@ export default function HourlyForecast({ hourly, unit }) {
       </h2>
       <div
         ref={scrollerRef}
-        className="hourly-scroll glass flex snap-x gap-2 overflow-x-auto rounded-3xl p-3 sm:gap-3"
+        className="hourly-scroll glass flex snap-x gap-2 overflow-x-auto rounded-[28px] p-3 sm:gap-3"
       >
         {hourly.map((h, i) => {
           const info = getWeatherInfo(h.weather_code, h.isDay)
