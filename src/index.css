@@ -230,6 +230,78 @@ body {
   50% { transform: rotate(7deg); }
 }
 
+/* ---------- Part-level character animation (lively, not rigid) ---------- */
+
+/* Legs step alternately around the hips */
+.leg-step-l { animation: leg-step 0.55s ease-in-out infinite alternate; }
+.leg-step-r { animation: leg-step 0.55s ease-in-out infinite alternate-reverse; }
+
+@keyframes leg-step {
+  from { transform: rotate(-16deg); }
+  to { transform: rotate(16deg); }
+}
+
+/* Arms swing on the shoulders, opposite phase to each other */
+.arm-swing { animation: arm-swing 0.55s ease-in-out infinite alternate; }
+.arm-b { animation-direction: alternate-reverse; }
+
+@keyframes arm-swing {
+  from { transform: rotate(-11deg); }
+  to { transform: rotate(13deg); }
+}
+
+/* Torso squash & stretch, timed with the bob */
+.minion-squash {
+  animation: minion-squash 0.55s ease-in-out infinite alternate;
+}
+
+@keyframes minion-squash {
+  from { transform: scaleY(1) scaleX(1); }
+  to { transform: scaleY(0.96) scaleX(1.025); }
+}
+
+/* Goggle wobble, independent rhythm */
+.goggle-wobble {
+  animation: goggle-wobble 3.1s ease-in-out infinite;
+}
+
+@keyframes goggle-wobble {
+  0%, 100% { transform: rotate(-2.5deg); }
+  50% { transform: rotate(2.5deg); }
+}
+
+/* Blink every few seconds */
+.eye-blink {
+  animation: eye-blink 4.2s linear infinite;
+}
+
+@keyframes eye-blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  93% { transform: scaleY(0.08); }
+  96% { transform: scaleY(1); }
+}
+
+/* Pupil wanders, its own rhythm */
+.pupil-move {
+  animation: pupil-move 5.2s ease-in-out infinite;
+}
+
+@keyframes pupil-move {
+  0%, 18%, 100% { transform: translateX(0); }
+  33%, 53% { transform: translateX(1.5px); }
+  68%, 84% { transform: translateX(-1.1px); }
+}
+
+/* Hair sways */
+.hair-sway {
+  animation: hair-sway 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes hair-sway {
+  from { transform: rotate(-5deg); }
+  to { transform: rotate(5deg); }
+}
+
 /* ---------- Focus visibility ---------- */
 
 :focus-visible {

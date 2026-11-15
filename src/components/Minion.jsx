@@ -1,15 +1,19 @@
-// A Minion mascot that lives next to the temperature reading (FR-08).
-// It reacts to the weather AND the feels-like temperature:
-//   rain            → dances with the umbrella
-//   thunder         → cowers under the umbrella, trembling
-//   snow / cold ≤10°→ shivers in beanie + scarf + mittens
-//   clear day ≥32°  → wipes sweat, dripping
-//   clear day warm  → happy in sunglasses + straw hat
-//   clear night     → fishes a star out of the sky with a rod
-//   fog             → holds a lantern
-//   cloudy          → hood up, gentle idle sway
+// A lively Minion mascot that lives next to the temperature reading (FR-08).
+// Animation is part-based so it feels alive, not like a moving image:
+//   - legs step alternately around the hips
+//   - arms swing on the shoulders
+//   - torso does squash-&-stretch while the whole mascot bobs
+//   - goggle wobbles, eye blinks, pupil wanders, hair sways
+// It also reacts to the weather AND the feels-like temperature:
+//   rain → dances with umbrella · thunder → cowers · snow/cold → shivers
+//   clear day hot → sweats · clear day → happy · clear night → fishes a star
+//   fog → lantern · cloudy → hood up
 // Decorative only: aria-hidden, pointer-events none, CSS-driven motion,
 // and effectively disabled under prefers-reduced-motion.
+
+// Style helper: rotate a part around its own top-centre (joint) using its bbox.
+const joint = { transformBox: 'fill-box', transformOrigin: '50% 0%' }
+const centre = { transformBox: 'fill-box', transformOrigin: '50% 50%' }
 
 export default function Minion({ themeKey, feelsLike }) {
   const hot = feelsLike != null && feelsLike >= 32
@@ -47,7 +51,7 @@ export default function Minion({ themeKey, feelsLike }) {
     : action === 'cower' ? 'minion-cower'
     : ''
 
-  // ---- Arms per action ----
+  // ---- Arms per action (endpoints feed held accessories) ----
   const arms = (() => {
     if (action === 'fish') {
       return {
@@ -96,110 +100,125 @@ export default function Minion({ themeKey, feelsLike }) {
           {/* ground shadow */}
           <ellipse cx="52" cy="107" rx="20" ry="3.4" fill="rgba(0,0,0,0.22)" />
 
-          {/* legs + feet */}
-          <rect x="41" y="88" width="7" height="12" rx="3" fill={coat ? '#EA7317' : '#1F2937'} />
-          <rect x="52" y="88" width="7" height="12" rx="3" fill={coat ? '#EA7317' : '#1F2937'} />
-          <ellipse cx="42" cy="102" rx="7.5" ry="3.5" fill="#111827" />
-          <ellipse cx="57" cy="102" rx="7.5" ry="3.5" fill="#111827" />
+          {/* stepping legs — alternate rotation around the hips */}
+          <g className="leg-step-l" style={joint}>
+            <rect x="41" y="88" width="7" height="12" rx="3" fill={coat ? '#EA7317' : '#1F2937'} />
+            <ellipse cx="42" cy="102" rx="7.5" ry="3.5" fill="#111827" />
+          </g>
+          <g className="leg-step-r" style={joint}>
+            <rect x="52" y="88" width="7" height="12" rx="3" fill={coat ? '#EA7317' : '#1F2937'} />
+            <ellipse cx="57" cy="102" rx="7.5" ry="3.5" fill="#111827" />
+          </g>
 
-          {/* body capsule */}
-          <rect x="30" y="26" width="40" height="66" rx="20" fill="#F6D544" />
+          {/* torso: squash-&-stretch */}
+          <g className="minion-squash" style={{ transformBox: 'fill-box', transformOrigin: '50% 100%' }}>
+            {/* body capsule */}
+            <rect x="30" y="26" width="40" height="66" rx="20" fill="#F6D544" />
 
-          {/* hair */}
-          <path d="M44 27 L42 20.5 M50 26.5 L50 20 M56 27 L58 20.5" stroke="#1F2937" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+            {/* swaying hair */}
+            <g className="hair-sway" style={joint}>
+              <path d="M44 27 L42 20.5 M50 26.5 L50 20 M56 27 L58 20.5" stroke="#1F2937" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+            </g>
 
-          {/* back arm */}
-          <path d={arms.back.d} stroke={coat ? '#EA7317' : '#F6D544'} strokeWidth="5.5" strokeLinecap="round" fill="none" />
+            {/* back arm (swings) */}
+            <g className="arm-swing arm-b" style={joint}>
+              <path d={arms.back.d} stroke={coat ? '#EA7317' : '#F6D544'} strokeWidth="5.5" strokeLinecap="round" fill="none" />
+            </g>
 
-          {/* ---- attire: torso layers ---- */}
-          {coat && (
-            <>
-              <path d="M28 36 h44 v40 a22 22 0 0 1 -44 0 z" fill="#EA7317" opacity="0.97" />
-              <line x1="50" y1="42" x2="50" y2="82" stroke="#F8D7B0" strokeWidth="1.6" strokeDasharray="3 3" />
-            </>
-          )}
-          {attire.hoodie && (
-            <>
-              <line x1="44" y1="58" x2="44" y2="66" stroke="#E2E8F0" strokeWidth="1.8" strokeLinecap="round" />
-              <line x1="56" y1="58" x2="56" y2="66" stroke="#E2E8F0" strokeWidth="1.8" strokeLinecap="round" />
-              <circle cx="44" cy="67" r="1.4" fill="#CBD5E1" />
-              <circle cx="56" cy="67" r="1.4" fill="#CBD5E1" />
-            </>
-          )}
-          {!coat && (
-            <>
-              <path d="M31 64 h38 v12 a19 19 0 0 1 -38 0 z" fill="#3B6EA5" />
-              <rect x="40" y="56" width="20" height="9" rx="2" fill="#3B6EA5" />
-              <line x1="42" y1="57" x2="39" y2="42" stroke="#3B6EA5" strokeWidth="3" strokeLinecap="round" />
-              <line x1="58" y1="57" x2="61" y2="42" stroke="#3B6EA5" strokeWidth="3" strokeLinecap="round" />
-              <circle cx="42.5" cy="58.5" r="1.3" fill="#F6D544" />
-              <circle cx="57.5" cy="58.5" r="1.3" fill="#F6D544" />
-            </>
-          )}
+            {/* torso attire */}
+            {coat && (
+              <>
+                <path d="M28 36 h44 v40 a22 22 0 0 1 -44 0 z" fill="#EA7317" opacity="0.97" />
+                <line x1="50" y1="42" x2="50" y2="82" stroke="#F8D7B0" strokeWidth="1.6" strokeDasharray="3 3" />
+              </>
+            )}
+            {attire.hoodie && (
+              <>
+                <line x1="44" y1="58" x2="44" y2="66" stroke="#E2E8F0" strokeWidth="1.8" strokeLinecap="round" />
+                <line x1="56" y1="58" x2="56" y2="66" stroke="#E2E8F0" strokeWidth="1.8" strokeLinecap="round" />
+                <circle cx="44" cy="67" r="1.4" fill="#CBD5E1" />
+                <circle cx="56" cy="67" r="1.4" fill="#CBD5E1" />
+              </>
+            )}
+            {!coat && (
+              <>
+                <path d="M31 64 h38 v12 a19 19 0 0 1 -38 0 z" fill="#3B6EA5" />
+                <rect x="40" y="56" width="20" height="9" rx="2" fill="#3B6EA5" />
+                <line x1="42" y1="57" x2="39" y2="42" stroke="#3B6EA5" strokeWidth="3" strokeLinecap="round" />
+                <line x1="58" y1="57" x2="61" y2="42" stroke="#3B6EA5" strokeWidth="3" strokeLinecap="round" />
+                <circle cx="42.5" cy="58.5" r="1.3" fill="#F6D544" />
+                <circle cx="57.5" cy="58.5" r="1.3" fill="#F6D544" />
+              </>
+            )}
+            {attire.scarf && (
+              <>
+                <rect x="36" y="55" width="28" height="6" rx="3" fill="#E74C3C" />
+                <rect x="58" y="58" width="7" height="15" rx="3" fill="#C0392B" />
+              </>
+            )}
 
-          {/* scarf */}
-          {attire.scarf && (
-            <>
-              <rect x="36" y="55" width="28" height="6" rx="3" fill="#E74C3C" />
-              <rect x="58" y="58" width="7" height="15" rx="3" fill="#C0392B" />
-            </>
-          )}
+            {/* headwear behind the goggle */}
+            {attire.hoodie && (
+              <path d="M30 35 a20 17 0 0 1 40 0" fill="none" stroke="#94A3B8" strokeWidth="6" strokeLinecap="round" />
+            )}
+            {attire.sunhat && (
+              <>
+                <ellipse cx="50" cy="29" rx="23" ry="5" fill="#EACD8A" stroke="#C9A24B" strokeWidth="1" />
+                <path d="M33 28 a17 12 0 0 1 34 0 z" fill="#EACD8A" />
+                <rect x="34" y="24" width="32" height="4.5" rx="2" fill="#C0392B" />
+              </>
+            )}
+            {attire.nightcap && (
+              <>
+                <path d="M33 29 Q44 8 60 10 Q66 12 67 28 Z" fill="#DC2626" />
+                <rect x="32" y="26" width="36" height="5.5" rx="2.7" fill="#F87171" />
+                <circle cx="61" cy="9" r="3.2" fill="#F8FAFC" />
+              </>
+            )}
+            {attire.beanie && (
+              <>
+                <path d="M33 29 a17 14 0 0 1 34 0 v1 z" fill="#2E86C1" />
+                <rect x="31" y="27" width="38" height="6.5" rx="3.2" fill="#1B4F72" />
+                <circle cx="50" cy="14" r="3.6" fill="#F8FAFC" />
+              </>
+            )}
 
-          {/* headwear drawn behind the goggle where needed */}
-          {attire.hoodie && (
-            <path d="M30 35 a20 17 0 0 1 40 0" fill="none" stroke="#94A3B8" strokeWidth="6" strokeLinecap="round" />
-          )}
-          {attire.sunhat && (
-            <>
-              <ellipse cx="50" cy="29" rx="23" ry="5" fill="#EACD8A" stroke="#C9A24B" strokeWidth="1" />
-              <path d="M33 28 a17 12 0 0 1 34 0 z" fill="#EACD8A" />
-              <rect x="34" y="24" width="32" height="4.5" rx="2" fill="#C0392B" />
-            </>
-          )}
-          {attire.nightcap && (
-            <>
-              <path d="M33 29 Q44 8 60 10 Q66 12 67 28 Z" fill="#DC2626" />
-              <rect x="32" y="26" width="36" height="5.5" rx="2.7" fill="#F87171" />
-              <circle cx="61" cy="9" r="3.2" fill="#F8FAFC" />
-            </>
-          )}
-          {attire.beanie && (
-            <>
-              <path d="M33 29 a17 14 0 0 1 34 0 v1 z" fill="#2E86C1" />
-              <rect x="31" y="27" width="38" height="6.5" rx="3.2" fill="#1B4F72" />
-              <circle cx="50" cy="14" r="3.6" fill="#F8FAFC" />
-            </>
-          )}
+            {/* wobbling goggle + blinking eye + wandering pupil */}
+            <g className="goggle-wobble" style={centre}>
+              <rect x="30" y="41" width="40" height="5" fill="#374151" />
+              <circle cx="50" cy="43" r="10" fill="#E5E7EB" stroke="#6B7280" strokeWidth="2" />
+              <g className="eye-blink" style={centre}>
+                <circle cx="50" cy="43" r="6" fill="#FFFFFF" />
+                <g className="pupil-move">
+                  <circle cx="51" cy="43" r="3" fill="#8B5A2B" />
+                  <circle cx="51.6" cy="43" r="1.5" fill="#111827" />
+                </g>
+                <circle cx="49.4" cy="41.6" r="0.9" fill="#FFFFFF" />
+              </g>
+              {attire.sunglasses && (
+                <>
+                  <rect x="36" y="37" width="28" height="9" rx="4.5" fill="#111827" opacity="0.92" />
+                  <line x1="36" y1="41" x2="30" y2="39" stroke="#111827" strokeWidth="2" strokeLinecap="round" />
+                  <circle cx="44" cy="41.5" r="1.4" fill="#4B5563" />
+                  <circle cx="56" cy="41.5" r="1.4" fill="#4B5563" />
+                </>
+              )}
+            </g>
 
-          {/* goggle strap + goggle + eye */}
-          <rect x="30" y="41" width="40" height="5" fill="#374151" />
-          <circle cx="50" cy="43" r="10" fill="#E5E7EB" stroke="#6B7280" strokeWidth="2" />
-          <circle cx="50" cy="43" r="6" fill="#FFFFFF" />
-          <circle cx="51" cy="43" r="3" fill="#8B5A2B" />
-          <circle cx="51.6" cy="43" r="1.5" fill="#111827" />
-          <circle cx="49.4" cy="41.6" r="0.9" fill="#FFFFFF" />
+            {/* mouth / expression */}
+            {mouth}
 
-          {/* sunglasses */}
-          {attire.sunglasses && (
-            <>
-              <rect x="36" y="37" width="28" height="9" rx="4.5" fill="#111827" opacity="0.92" />
-              <line x1="36" y1="41" x2="30" y2="39" stroke="#111827" strokeWidth="2" strokeLinecap="round" />
-              <circle cx="44" cy="41.5" r="1.4" fill="#4B5563" />
-              <circle cx="56" cy="41.5" r="1.4" fill="#4B5563" />
-            </>
-          )}
+            {/* front arm (swings) */}
+            <g className="arm-swing" style={joint}>
+              <path d={arms.front.d} stroke={coat ? '#EA7317' : '#F6D544'} strokeWidth="5.5" strokeLinecap="round" fill="none" />
+            </g>
+          </g>
 
-          {/* mouth / expression */}
-          {mouth}
-
-          {/* front arm */}
-          <path d={arms.front.d} stroke={coat ? '#EA7317' : '#F6D544'} strokeWidth="5.5" strokeLinecap="round" fill="none" />
+          {/* hands drawn outside the squash so grips stay connected */}
           <circle cx={arms.front.hand[0]} cy={arms.front.hand[1]} r="3.2" fill={handFill} />
           <circle cx={arms.back.hand[0]} cy={arms.back.hand[1]} r="3.2" fill={handFill} />
 
           {/* ---- held accessories ---- */}
-
-          {/* umbrella (tilted with the walking grip, vertical while dancing) */}
           {attire.umbrella && (() => {
             const dancing = action === 'dance'
             const cx = dancing ? 75 : 71
@@ -217,7 +236,6 @@ export default function Minion({ themeKey, feelsLike }) {
             )
           })()}
 
-          {/* lantern */}
           {attire.lantern && (
             <>
               <circle cx="83" cy="70" r="10" fill="rgba(250,204,21,0.30)" />
@@ -227,7 +245,6 @@ export default function Minion({ themeKey, feelsLike }) {
             </>
           )}
 
-          {/* fishing rod pulling a star out of the night sky */}
           {attire.rod && (
             <>
               <line x1={arms.front.hand[0]} y1={arms.front.hand[1]} x2="97" y2="28" stroke="#8B5A2B" strokeWidth="2.2" strokeLinecap="round" />
@@ -238,7 +255,6 @@ export default function Minion({ themeKey, feelsLike }) {
             </>
           )}
 
-          {/* flying sweat drops */}
           {attire.sweat && (
             <>
               <path className="anim-sweat" d="M74 26 q3 4.5 0 7 q-3 -2.5 0 -7" fill="#7DD3FC" />
