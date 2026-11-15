@@ -5,8 +5,10 @@ const KEYS = {
   unit: 'wc:unit',
   saved: 'wc:savedCities',
   recent: 'wc:recentSearches',
-  last: 'wc:lastLocation',
 }
+
+// Written by older versions; wiped on clear-data for tidiness
+const LEGACY_KEYS = ['wc:lastLocation']
 
 export const MAX_SAVED = 10
 export const MAX_RECENT = 5
@@ -33,6 +35,7 @@ function write(key, value) {
 export function clearAll() {
   try {
     Object.values(KEYS).forEach((k) => window.localStorage.removeItem(k))
+    LEGACY_KEYS.forEach((k) => window.localStorage.removeItem(k))
   } catch {
     /* noop */
   }
@@ -86,15 +89,4 @@ export function addRecent(city) {
   const trimmed = list.slice(0, MAX_RECENT)
   write(KEYS.recent, trimmed)
   return trimmed
-}
-
-// ---- Last viewed location (restores dashboard on return visits) ----
-
-export function getLastLocation() {
-  const loc = read(KEYS.last, null)
-  return loc && typeof loc.latitude === 'number' && typeof loc.longitude === 'number' ? loc : null
-}
-
-export function setLastLocation(city) {
-  write(KEYS.last, city)
 }

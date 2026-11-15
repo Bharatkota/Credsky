@@ -15,11 +15,12 @@ import { events } from './lib/analytics'
 import { getThemeKey, THEMES } from './lib/weatherCodes'
 
 // Status machine: 'home' | 'loading' | 'ready' | 'error'
-// While loading a new location, previous weather is never shown as current (FR-02).
+// Every fresh visit starts on the homepage; previous weather is never shown as
+// current while a new location loads (FR-02).
 
 export default function App() {
-  const [status, setStatus] = useState(() => (storage.getLastLocation() ? 'loading' : 'home'))
-  const [location, setLocation] = useState(() => storage.getLastLocation())
+  const [status, setStatus] = useState('home')
+  const [location, setLocation] = useState(null)
   const [weather, setWeather] = useState(null)
   const [error, setError] = useState(null)
   const [unit, setUnit] = useState(() => storage.getUnit())
@@ -88,7 +89,6 @@ export default function App() {
         fetchedAt: Date.now(),
       })
       setLocation(loc)
-      storage.setLastLocation(loc)
       setStatus('ready')
       events.weatherLoaded(loc)
     } catch (err) {
@@ -101,12 +101,10 @@ export default function App() {
     }
   }, [])
 
-  // Restore the last-viewed location on load
+  // Abort in-flight weather requests when unmounting
   useEffect(() => {
-    const last = storage.getLastLocation()
-    if (last) loadWeather(last)
     return () => abortRef.current?.abort()
-  }, [loadWeather])
+  }, [])
 
   const selectCity = useCallback(
     (city) => {
